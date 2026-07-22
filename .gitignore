@@ -1,7 +1,19 @@
+# Virtual Environment
 venv/
+
+# Environment Variables
 .env
+
+# Python Cache
 __pycache__/
 *.pyc
+
+# VS Code
 .vscode/
-vectordb/
+
+# Uploaded PDFs
 documents/
+data/
+
+# ChromaDB
+chroma_db/

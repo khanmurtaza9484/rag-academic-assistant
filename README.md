@@ -1,12 +1,18 @@
 # 📚 AI PDF Q&A Chatbot (RAG)
 
-A **Retrieval-Augmented Generation (RAG)** based PDF Question Answering chatbot built using **Python**, **FAISS**, **Sentence Transformers**, **Google Gemini**, and **Streamlit**.
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-App-red)
+![ChromaDB](https://img.shields.io/badge/VectorDB-ChromaDB-green)
+![Gemini](https://img.shields.io/badge/LLM-Gemini%202.5%20Flash-orange)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-The application allows users to upload one or more PDF documents, retrieve the most relevant information using semantic vector search, and generate accurate answers grounded in the uploaded documents.
+A **Retrieval-Augmented Generation (RAG)** application that enables users to upload one or more PDF documents and ask natural language questions grounded entirely in the uploaded content.
+
+Built with **Python**, **ChromaDB**, **BAAI/bge-base-en-v1.5**, **Google Gemini 2.5 Flash**, and **Streamlit**.
 
 ---
 
-# 🚀 Live Demo
+## 🚀 Live Demo
 
 **Hugging Face Space**
 
@@ -14,50 +20,68 @@ The application allows users to upload one or more PDF documents, retrieve the m
 
 ---
 
-# ✅ Project Status
-
-### Completed Features
-
-- ✅ Multiple PDF Upload
-- ✅ PDF Text Extraction
-- ✅ Automatic Text Chunking
-- ✅ Semantic Search using FAISS
-- ✅ Google Gemini Integration
-- ✅ Streamlit Web Interface
-- ✅ Hugging Face Deployment
-- ✅ Modular Project Architecture
-
----
-
 # ✨ Features
 
-- Upload one or more PDF documents
-- Automatic PDF text extraction
-- Intelligent text chunking
-- Semantic embeddings using Sentence Transformers
-- Fast similarity search using FAISS
-- Google Gemini powered answer generation
-- Multi-document question answering
-- Streamlit web interface
-- Docker deployment on Hugging Face Spaces
-- Modular and extensible project structure
+- 📄 Multiple PDF upload
+- 📑 PDF text extraction
+- ✂️ Overlapping text chunking
+- 🧠 Semantic embeddings using **BAAI/bge-base-en-v1.5**
+- 🗄️ Persistent **ChromaDB** vector database
+- 🔍 Semantic similarity search
+- 🤖 Google Gemini 2.5 Flash answer generation
+- 💬 Natural language question answering
+- 🌐 Streamlit web interface
+- 🧩 Modular project architecture
+- ☁️ Hugging Face Spaces deployment
 
 ---
 
-# 🛠️ Technologies Used
+# 🚀 Key Improvements
+
+| Improvement | Description |
+|------------|-------------|
+| Embedding Model | Upgraded to **BAAI/bge-base-en-v1.5** |
+| Chunking | Implemented overlapping chunking |
+| Vector Database | Replaced FAISS with Persistent ChromaDB |
+| Retrieval | Improved semantic retrieval |
+| Deployment | Streamlit + Hugging Face Spaces |
+
+---
+
+# 🛠️ Technology Stack
 
 - Python
 - Streamlit
-- Google Gemini API
+- ChromaDB
+- Google Gemini 2.5 Flash
 - Sentence Transformers
-- FAISS
+- BAAI/bge-base-en-v1.5
 - PyPDF
 - NumPy
+- Torch
+- Transformers
 - python-dotenv
 - Docker
 - Git
 - GitHub
 - Hugging Face Spaces
+
+---
+
+# 🧠 RAG Pipeline
+
+```mermaid
+graph TD
+A[Upload PDF] --> B[Extract Text]
+B --> C[Overlapping Chunking]
+C --> D[BGE Base Embeddings]
+D --> E[Persistent ChromaDB]
+F[User Question] --> G[Question Embedding]
+G --> E
+E --> H[Retrieve Relevant Chunks]
+H --> I[Gemini 2.5 Flash]
+I --> J[Final Answer]
+```
 
 ---
 
@@ -71,6 +95,7 @@ rag-academic-assistant/
 ├── Dockerfile
 ├── requirements.txt
 ├── README.md
+├── LICENSE
 ├── .gitignore
 │
 ├── src/
@@ -85,106 +110,48 @@ rag-academic-assistant/
 
 ---
 
-# ⚙️ How It Works
-
-1. Upload one or more PDF documents.
-2. Extract text from each document.
-3. Split the extracted text into manageable chunks.
-4. Generate embeddings using Sentence Transformers.
-5. Store embeddings inside a FAISS vector index.
-6. Convert the user's question into an embedding.
-7. Retrieve the most relevant chunks using similarity search.
-8. Send the retrieved context to Google Gemini.
-9. Generate and display the final answer.
-
----
-
-# 🧠 RAG Architecture
-
-```text
-               PDF Upload
-                    │
-                    ▼
-          Text Extraction
-                    │
-                    ▼
-              Text Chunking
-                    │
-                    ▼
-      Sentence Transformer Embeddings
-                    │
-                    ▼
-            FAISS Vector Index
-                    │
-                    ▼
-             User Question
-                    │
-                    ▼
-      Semantic Similarity Search
-                    │
-                    ▼
-          Relevant Text Chunks
-                    │
-                    ▼
-          Google Gemini LLM
-                    │
-                    ▼
-             Final Response
-```
-
----
-
-# ⚡ Installation
-
-Clone the repository
+# ⚙️ Installation
 
 ```bash
 git clone https://github.com/khanmurtaza9484/rag-academic-assistant.git
-```
-
-Navigate into the project
-
-```bash
 cd rag-academic-assistant
-```
 
-Create a virtual environment
-
-```bash
 python -m venv venv
-```
 
-Activate the virtual environment
-
-### Linux / macOS
-
-```bash
+# Linux / macOS
 source venv/bin/activate
-```
 
-### Windows
-
-```bash
+# Windows
 venv\Scripts\activate
-```
 
-Install dependencies
-
-```bash
 pip install -r requirements.txt
 ```
 
-Create a `.env` file
+Create a `.env` file:
 
 ```text
 GEMINI_API_KEY=YOUR_API_KEY
 ```
 
-Run the application
+Run the application:
 
 ```bash
 streamlit run app.py
 ```
+
+---
+
+# ⚡ How It Works
+
+1. Upload one or more PDF documents.
+2. Extract text from each PDF.
+3. Split the text into overlapping chunks.
+4. Generate embeddings using **BAAI/bge-base-en-v1.5**.
+5. Store embeddings in **Persistent ChromaDB**.
+6. Convert the user question into an embedding.
+7. Retrieve the most relevant chunks.
+8. Pass the retrieved context to **Google Gemini 2.5 Flash**.
+9. Generate the final answer.
 
 ---
 
@@ -194,25 +161,17 @@ streamlit run app.py
 
 ![Home](screenshots/home.png)
 
----
-
-## Uploading PDF Documents
+## Upload PDFs
 
 ![Upload](screenshots/upload.png)
 
----
-
-## Asking Questions
+## Ask Questions
 
 ![Question](screenshots/question.png)
 
----
-
-## AI Generated Answer
+## Generated Answer
 
 ![Answer](screenshots/answer.png)
-
----
 
 ## Multiple PDF Support
 
@@ -222,13 +181,14 @@ streamlit run app.py
 
 # 🔮 Future Improvements
 
-- Display source citations with page numbers
-- Persistent FAISS index
-- Conversation history
+- Semantic chunking
+- Hybrid retrieval (BM25 + Dense Retrieval)
+- Cross-encoder reranking
 - OCR support for scanned PDFs
-- Hybrid keyword + semantic search
+- Conversation history
+- Source citations with page numbers
 - Improved UI/UX
-- Authentication for private document collections
+- Authentication
 
 ---
 
@@ -242,9 +202,7 @@ GitHub: https://github.com/khanmurtaza9484
 
 # ⭐ Support
 
-If you found this project helpful, please consider giving it a ⭐ on GitHub.
-
-It helps others discover the project and motivates future improvements.
+If you found this project useful, consider giving it a ⭐ on GitHub.
 
 ---
 

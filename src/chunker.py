@@ -1,20 +1,23 @@
-def create_chunks(text, chunk_size=800):
+def create_chunks(text, chunk_size=800, overlap=200):
     """
-    Splits the extracted text into smaller chunks.
+    Splits the extracted text into overlapping chunks.
 
     Args:
         text (str): Extracted PDF text.
         chunk_size (int): Maximum size of each chunk.
+        overlap (int): Number of overlapping characters between chunks.
 
     Returns:
         list: List of text chunks.
     """
 
-    # Split the text into fixed-size chunks
-    chunks = [
-        text[i:i + chunk_size]
-        for i in range(0, len(text), chunk_size)
-    ]
+    chunks = []
+    step = chunk_size - overlap
 
-    # Return the list of chunks
+    for i in range(0, len(text), step):
+        chunk = text[i:i + chunk_size]
+
+        if chunk:
+            chunks.append(chunk)
+
     return chunks

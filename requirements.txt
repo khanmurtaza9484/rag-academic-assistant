@@ -1,6 +1,6 @@
 streamlit
 numpy
-faiss-cpu
+chromadb
 sentence-transformers
 pypdf
 python-dotenv

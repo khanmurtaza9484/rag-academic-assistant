@@ -1,42 +1,46 @@
-# Import required libraries
-import faiss
-import numpy as np
+import chromadb
 from sentence_transformers import SentenceTransformer
 
 
 def create_vector_store(chunks):
     """
     Creates embeddings for text chunks and stores them
-    in a FAISS vector index.
+    in a ChromaDB vector database.
 
     Args:
         chunks (list): List of text chunks.
 
     Returns:
-        tuple: Embedding model and FAISS index.
+        tuple: Embedding model and ChromaDB collection.
     """
 
-    # Load the sentence transformer model
     print("Loading embedding model...")
-    model = SentenceTransformer("all-MiniLM-L6-v2")
+    model = SentenceTransformer("BAAI/bge-base-en-v1.5")
 
-    # Generate embeddings for all text chunks
     print("Creating embeddings...")
-    embeddings = model.encode(chunks)
+    embeddings = model.encode(chunks).tolist()
 
-    # Convert embeddings to float32 (required by FAISS)
-    embeddings = np.array(embeddings).astype("float32")
+    # Persistent ChromaDB
+    client = chromadb.PersistentClient(path="chroma_db")
 
-    # Get the embedding dimension
-    dimension = embeddings.shape[1]
+    # Create collection if it doesn't exist
+    collection = client.get_or_create_collection(
+        name="pdf_knowledge_base"
+    )
 
-    # Create a FAISS index
-    index = faiss.IndexFlatL2(dimension)
+    # Clear old data
+    existing = collection.get()
 
-    # Add embeddings to the FAISS index
-    index.add(embeddings)
+    if existing["ids"]:
+        collection.delete(ids=existing["ids"])
+
+    # Add new documents
+    collection.add(
+        ids=[str(i) for i in range(len(chunks))],
+        documents=chunks,
+        embeddings=embeddings
+    )
 
     print("Knowledge base ready.")
 
-    # Return the model and FAISS index
-    return model, index
+    return model, collection

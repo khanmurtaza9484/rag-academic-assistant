@@ -1,6 +1,5 @@
 import streamlit as st
 import os
-import numpy as np
 
 from google import genai
 from dotenv import load_dotenv
@@ -68,8 +67,8 @@ if uploaded_files:
     # Create chunks
     chunks = create_chunks(all_text)
 
-    # Create FAISS Vector Store
-    model, index = create_vector_store(chunks)
+    # Create ChromaDB Vector Store
+    model, collection = create_vector_store(chunks)
 
     # -------------------------
     # Ask Question
@@ -85,18 +84,15 @@ if uploaded_files:
         else:
 
             # Convert question into embedding
-            query_embedding = model.encode([question])
-            query_embedding = np.array(query_embedding).astype("float32")
+            query_embedding = model.encode([question]).tolist()
 
             # Retrieve relevant chunks
-            k = 3
+            results = collection.query(
+                query_embeddings=query_embedding,
+                n_results=3
+            )
 
-            distances, indices = index.search(query_embedding, k)
-
-            context = ""
-
-            for idx in indices[0]:
-                context += chunks[idx] + "\n"
+            context = "\n".join(results["documents"][0])
 
             # Prompt
             prompt = f"""
